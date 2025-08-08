@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ColdShine.Blazor.Models
 {
-	public class Condition
+	public class Condition<ValueType>: BaseCondition
 	{
 		[System.ComponentModel.Description("搜索的字段")]
 		public string Property { get; set; } = null!;
@@ -33,22 +33,9 @@ namespace ColdShine.Blazor.Models
 
 		public LogicalConnective Connective { get; set; }
 
-		public ValueType ValueType { get; set; }
+		//public ValueType ValueType { get; set; }
 
-		private object _Value = null!;
-		public object Value
-		{
-			get
-			{
-				return this._Value;
-			}
-			set
-			{
-				if (this.ValueType == ValueType.DateTime && !(value is DateTime))
-					this._Value = System.Text.Json.JsonSerializer.Deserialize<System.DateTime>((string)value);
-				else this._Value = value;
-			}
-		}
+		public required ValueType Value { get; set; }
 
 		private Operator _Operator = null!;
 		[System.Text.Json.Serialization.JsonIgnore]
@@ -72,7 +59,20 @@ namespace ColdShine.Blazor.Models
 
 		//protected readonly string PropertyVariableName = "P" + VariableIndex++;
 
-		public readonly string VariableName = "V" + VariableIndex++;
+		private string _VariableName = null!;
+		public override string VariableName
+		{
+			get
+			{
+				if(this._VariableName==null)
+					this._VariableName = "V" + VariableIndex++;
+				return this._VariableName;
+			}
+			set
+			{
+				this._VariableName = value;
+			}
+		}
 
 		public static readonly System.Collections.ObjectModel.ReadOnlyDictionary<LogicalConnective, string> Connectives = new System.Collections.ObjectModel.ReadOnlyDictionary<LogicalConnective, string>(new Dictionary<LogicalConnective, string>() { { LogicalConnective.And, "&&" }, { LogicalConnective.Or, "||" } });
 
@@ -96,17 +96,22 @@ namespace ColdShine.Blazor.Models
 			}
 		}
 
-		public string GetExpression(bool firstCondition)
+
+		public override string GetExpression(bool firstCondition)
 		{
 			if (firstCondition)
 				return this.Expression;
 			return " " + Connectives[this.Connective] + " " + this.Expression;
 		}
 
-		public string GetExpression(int index)
+		public override string GetExpression(int index)
 		{
 			return this.GetExpression(index == 0);
 		}
 
+		public override object GetValue()
+		{
+			return this.Value!;
+		}
 	}
 }

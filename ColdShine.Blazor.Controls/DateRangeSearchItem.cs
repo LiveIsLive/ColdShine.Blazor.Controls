@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ColdShine.Blazor.Controls
 {
-	public class DateRangeSearchItem : SearchItem
+	public class DateRangeSearchItem : SearchItem<System.DateTime>
 	{
 		[Microsoft.AspNetCore.Components.Parameter]
 		public System.DateTime? StartDate { get; set; }
@@ -21,6 +21,15 @@ namespace ColdShine.Blazor.Controls
 		[Microsoft.AspNetCore.Components.Parameter]
 		public Microsoft.AspNetCore.Components.EventCallback<System.DateTime> EndDateChanged { get; set; }
 
-		public override IEnumerable<Condition> SimpleSearcherConditions => throw new NotImplementedException();
+		public override IEnumerable<Condition<System.DateTime>> SimpleSearcherConditions
+		{
+			get
+			{
+				if(this.StartDate!=null)
+					yield return new() { Property = this.Property, Operator = ColdShine.Blazor.Models.Operators.GreaterOrEqualOperator, Value = this.StartDate.Value.Date };
+				if(this.EndDate!=null)
+					yield return new() { Property = this.Property, Operator = ColdShine.Blazor.Models.Operators.LessOperator, Value = this.EndDate.Value.Date.AddDays(1) };
+			}
+		}
 	}
 }

@@ -2,9 +2,9 @@
 
 @code {
 	[Parameter]
-	public RenderFragment<SearchItem>? Items { get; set; }
+	public RenderFragment<BaseSearchItem>? Items { get; set; }
 
-	public System.Collections.Generic.List<SearchItem> SearchItems { get; } = new();
+	public System.Collections.Generic.List<BaseSearchItem> SearchItems { get; } = new();
 
 	public void Test()
 	{
