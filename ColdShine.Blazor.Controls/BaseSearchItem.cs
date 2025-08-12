@@ -8,8 +8,9 @@ namespace ColdShine.Blazor.Controls
 {
 	public abstract class BaseSearchItem : Microsoft.AspNetCore.Components.ComponentBase,System.IDisposable
 	{
-		[Microsoft.AspNetCore.Components.CascadingParameter]
-		public required Searcher Searcher { get; set; }
+		[Microsoft.AspNetCore.Components.CascadingParameter(Name = "SearchItems")]
+		public required System.Collections.Generic.List<BaseSearchItem> SearcherItems { get; set; }
+
 
 		[Microsoft.AspNetCore.Components.Parameter]
 		[System.ComponentModel.Description("显示名称")]
@@ -33,15 +34,16 @@ namespace ColdShine.Blazor.Controls
 
 		public abstract System.Collections.Generic.IEnumerable<ColdShine.Blazor.Models.BaseCondition> GetSimpleSearcherConditions();
 
+
 		protected override void OnInitialized()
 		{
+			this.SearcherItems.Add(this);
 			base.OnInitialized();
-			this.Searcher.SearchItems.Add(this);
 		}
 
 		public void Dispose()
 		{
-			this.Searcher.SearchItems.Remove(this);
+			this.SearcherItems.Remove(this);
 		}
 	}
 }

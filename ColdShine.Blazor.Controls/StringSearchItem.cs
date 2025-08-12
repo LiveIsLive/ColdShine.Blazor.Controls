@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ColdShine.Blazor.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace ColdShine.Blazor.Controls
 			get
 			{
 				if (!string.IsNullOrWhiteSpace(this.Value))
-					yield return new(){ Property = this.Property, Operator = ColdShine.Blazor.Models.Operators.ContainsOperator, Value = this.Value.Trim() };
+					yield return new() { Property = this.Property, Operator = ColdShine.Blazor.Models.Operators.ContainsOperator, Value = this.Value.Trim() };
 			}
 		}
 	}
