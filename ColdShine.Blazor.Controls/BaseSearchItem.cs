@@ -28,12 +28,34 @@ namespace ColdShine.Blazor.Controls
 		[System.ComponentModel.Description("是否在高级搜索中显示")]
 		public bool ShowInAdvanceSearcher { get; set; } = true;
 
-		[Microsoft.AspNetCore.Components.Parameter]
-		[System.ComponentModel.Description("简单搜索控件宽度")]
-		public virtual int SimpleSearcherWidth { get; set; } = 100;
+		/*private static int _NewControlId;
+		protected int NewControlId { get => _NewControlId; set => _NewControlId = value; }*/
+		private static int NewControlId;
+
+		private string _TextBoxName = null!;
+		protected string TextBoxName
+		{
+			get
+			{
+				if (this._TextBoxName == null)
+					this._TextBoxName = "SimpleTextInputName" + NewControlId++;
+				return this._TextBoxName;
+			}
+		}
+
+		//[Microsoft.AspNetCore.Components.Parameter]
+		//[System.ComponentModel.Description("简单搜索控件宽度")]
+		//public virtual int? TextBoxWidth { get; set; }
 
 		public abstract System.Collections.Generic.IEnumerable<ColdShine.Blazor.Models.BaseCondition> GetSimpleSearcherConditions();
 
+		//protected string? AddParentItems()
+		//{
+		//	this.SearcherItems?.Add(this);
+		//	return null;
+		//}
+
+		public abstract void ResetValue();
 
 		protected override void OnInitialized()
 		{

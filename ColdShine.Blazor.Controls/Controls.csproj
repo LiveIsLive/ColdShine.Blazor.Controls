@@ -22,4 +22,10 @@
     <ProjectReference Include="..\ColdShine.Blazor.Models\Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="TextSearchItem.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>

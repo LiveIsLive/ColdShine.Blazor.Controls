@@ -87,7 +87,7 @@ namespace ColdShine.Blazor.Models
 					//this._Expression = Connectives[this.Connective];
 					if (this.LeftBracket)
 						this._Expression += "(";
-					this._Expression += string.Format(this.Operator.Expression, ConditionCollection.ItemsVariableName + "." + this.Property, this.VariableName);
+					this._Expression += string.Format(this.Operator.Expression, ConditionCollection.ItemVariableName + "." + this.Property, this.VariableName);
 					//this._Expression += string.Format(this.Operator.Expression, this.PropertyVariableName, this.ValueVariableName);
 					if (this.RightBracket)
 						this._Expression += ")";
