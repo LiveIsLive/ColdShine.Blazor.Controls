@@ -1,0 +1,39 @@
+﻿@typeparam ValueType
+@inherits SearchItem<ValueType>
+
+<table cellpadding="0" cellspacing="0" style="float:left;margin-right:10px">
+	<tr>
+		<td><RadzenLabel Text="@(this.Title+'：')" Component="@this.TextBoxName" /></td>
+		<td><RadzenDropDown Data="this.Data" @bind-Value=this.Value Style="@this.Style" Name="@this.TextBoxName" /></td>
+	</tr>
+</table>
+
+@code {
+	[Microsoft.AspNetCore.Components.Parameter]
+	public virtual required System.Collections.Generic.IEnumerable<ValueType> Data { get; set; }
+
+	[Microsoft.AspNetCore.Components.Parameter]
+	public ValueType? Value { get; set; }
+
+	[Microsoft.AspNetCore.Components.Parameter]
+	public virtual int? DropDownWidth { get; set; }
+
+	protected string Style => $"width:{this.DropDownWidth}px";
+
+	// [Microsoft.AspNetCore.Components.Parameter]
+	// public Microsoft.AspNetCore.Components.EventCallback<string> ValueChanged { get; set; }
+
+	public override void ResetValue()
+	{
+		this.Value = default(ValueType);
+	}
+
+	public override IEnumerable<ColdShine.Blazor.Models.Condition<ValueType>> SimpleSearcherConditions
+	{
+		get
+		{
+			if (this.Value != null)
+				yield return new() { Property = this.Property, Operator = ColdShine.Blazor.Models.Operators.EqualsOperator, Value = this.Value };
+		}
+	}
+}

@@ -5,6 +5,7 @@
 <Searcher Query="this.Query">
 	<TextSearchItem Title="姓名" Property="Name" />
 	<DateRangeSearchItem Title="出生日期" Property="Birthday" />
+	<EnumListSearchItem ValueType="Gender" Title="性别" Property="Gender" DropDownWidth="80" />
 </Searcher>
 <div style="clear:both"></div>
 <RadzenTable>
@@ -12,6 +13,7 @@
 		<RadzenTableHeaderRow>
 			<RadzenTableHeaderCell>Name</RadzenTableHeaderCell>
 			<RadzenTableHeaderCell>Birthday</RadzenTableHeaderCell>
+			<RadzenTableHeaderCell>Gender</RadzenTableHeaderCell>
 		</RadzenTableHeaderRow>
 	</RadzenTableHeader>
 	<RadzenTableBody>
@@ -20,6 +22,7 @@
 			<RadzenTableRow>
 				<RadzenTableCell>@record.Name</RadzenTableCell>
 				<RadzenTableCell>@record.Birthday</RadzenTableCell>
+				<RadzenTableCell>@record.Gender</RadzenTableCell>
 			</RadzenTableRow>
 		}
 	</RadzenTableBody>
@@ -28,7 +31,9 @@
 
 @code
 {
-	record Person(string Name, System.DateTime Birthday);
+	public enum Gender{男,女}
+
+	record Person(string Name, System.DateTime Birthday, Gender Gender);
 
 	RadzenPager Pager = null!;
 
@@ -64,44 +69,54 @@
 	{
 		this.Records = System.Text.Json.JsonSerializer.Deserialize<Person[]>(@"[
   {
-    ""Name"": ""Emily Rodriguez"",
-    ""Birthday"": ""1985-07-14T00:00:00""
+	""Name"": ""Emily Rodriguez"",
+	""Birthday"": ""1985-07-14T00:00:00"",
+	""Gender"": 0
   },
   {
-    ""Name"": ""David Garcia"",
-    ""Birthday"": ""1978-11-03T00:00:00""
+	""Name"": ""David Garcia"",
+	""Birthday"": ""1978-11-03T00:00:00"",
+	""Gender"": 1
   },
   {
-    ""Name"": ""Jennifer Smith"",
-    ""Birthday"": ""1992-05-22T00:00:00""
+	""Name"": ""Jennifer Smith"",
+	""Birthday"": ""1992-05-22T00:00:00"",
+	""Gender"": 0
   },
   {
-    ""Name"": ""Robert Wilson"",
-    ""Birthday"": ""1967-09-30T00:00:00""
+	""Name"": ""Robert Wilson"",
+	""Birthday"": ""1967-09-30T00:00:00"",
+	""Gender"": 1
   },
   {
-    ""Name"": ""Lisa Johnson"",
-    ""Birthday"": ""1989-12-15T00:00:00""
+	""Name"": ""Lisa Johnson"",
+	""Birthday"": ""1989-12-15T00:00:00"",
+	""Gender"": 0
   },
   {
-    ""Name"": ""Michael Davis"",
-    ""Birthday"": ""1975-03-08T00:00:00""
+	""Name"": ""Michael Davis"",
+	""Birthday"": ""1975-03-08T00:00:00"",
+	""Gender"": 1
   },
   {
-    ""Name"": ""Sarah Miller"",
-    ""Birthday"": ""1995-08-19T00:00:00""
+	""Name"": ""Sarah Miller"",
+	""Birthday"": ""1995-08-19T00:00:00"",
+	""Gender"": 0
   },
   {
-    ""Name"": ""John Williams"",
-    ""Birthday"": ""1982-01-25T00:00:00""
+	""Name"": ""John Williams"",
+	""Birthday"": ""1982-01-25T00:00:00"",
+	""Gender"": 1
   },
   {
-    ""Name"": ""William Brown"",
-    ""Birthday"": ""1963-10-11T00:00:00""
+	""Name"": ""William Brown"",
+	""Birthday"": ""1963-10-11T00:00:00"",
+	""Gender"": 0
   },
   {
-    ""Name"": ""Jane Jones"",
-    ""Birthday"": ""1990-04-05T00:00:00""
+	""Name"": ""Jane Jones"",
+	""Birthday"": ""1990-04-05T00:00:00"",
+	""Gender"": 1
   }
 ]")!;
 		this.Records = this.Conditions.Where(this.Records);

@@ -52,6 +52,8 @@ namespace ColdShine.Blazor.Models
 
 		public static readonly Operator ContainsOperator = StringOperators.First(o => o.Name == "包含");
 
+		public static readonly Operator EqualsOperator = StringOperators.First(o => o.Name == "等于");
+
 		public static readonly Operator GreaterOrEqualOperator = DecimalOperators.First(o => o.Name == "≥");
 
 		public static readonly Operator LessOperator = DecimalOperators.First(o => o.Name == "<");
